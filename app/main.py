@@ -1,11 +1,11 @@
+from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
-from app.routers import menu
-from app.database import Base, engine
+from app.routers import menu  # your router
 
-# Create tables
-Base.metadata.create_all(bind=engine)
+app = FastAPI()
 
-app = FastAPI(title="Restaurant API")
+# Mount the static folder
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-# Include routers
+# Include your router
 app.include_router(menu.router)
