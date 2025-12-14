@@ -6,7 +6,7 @@ Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 # Base URL for images hosted on Vercel
-BASE_IMAGE_URL = "https://restaurant-website-backend-blond.vercel.app/static"
+BASE_IMAGE_URL = "https://restaurant-website-backend-blond.vercel.app/static/images"
 
 mock_items = [
     {
