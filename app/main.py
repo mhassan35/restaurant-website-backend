@@ -1,11 +1,25 @@
-from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
-from app.routers import menu  # your router
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from app.routers import menu 
 
-app = FastAPI()
+app = FastAPI(title="Restaurant Backend")
 
-# Mount the static folder
+origins = [
+    "http://localhost:3000",
+    "https://restaurant-website-delta-neon.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"], 
+)
+
+# Mount the static folder to serve images
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-# Include your router
-app.include_router(menu.router)
+# Include the menu router
+app.include_router(menu.router, prefix="/menu", tags=["menu"])
