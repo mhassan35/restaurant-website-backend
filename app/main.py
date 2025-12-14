@@ -5,7 +5,7 @@ from app.routers import menu
 
 app = FastAPI()
 origins = [
-    "http://localhost:3000",  # React dev server
+    "http://localhost:3000",
     "https://restaurant-website-delta-neon.vercel.app",
 ]
 app.add_middleware(
@@ -15,5 +15,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory="app/static/images"), name="static")
 app.include_router(menu.router)
