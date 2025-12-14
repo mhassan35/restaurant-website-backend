@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
 class MenuItemBase(BaseModel):
-    id: str
     name: str
     description: str
     price: float
@@ -10,8 +9,8 @@ class MenuItemBase(BaseModel):
     rating: float
 
 class MenuItemCreate(MenuItemBase):
-    pass
+    id: str
 
-class MenuItem(MenuItemBase):
+class MenuItemResponse(MenuItemCreate):
     class Config:
         from_attributes = True
