@@ -1,6 +1,8 @@
 from app.database import SessionLocal, engine, Base
-from app import crud, schemas, models
+from app import models, schemas, crud
 
+# Recreate tables (drops old data)
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 mock_items = [
@@ -17,13 +19,9 @@ mock_items = [
 def seed():
     db = SessionLocal()
     try:
-        db.query(models.MenuItem).delete()
-        db.commit()
         for item in mock_items:
             crud.create_menu_item(db, schemas.MenuItemCreate(**item))
-
-        print("✅ Old menu removed and fresh menu seeded successfully")
-
+        print("✅ Menu seeded successfully")
     finally:
         db.close()
 

@@ -2,15 +2,17 @@ from pydantic import BaseModel
 
 class MenuItemBase(BaseModel):
     name: str
-    description: str
+    description: str | None = None
     price: float
-    image: str
-    category: str
-    rating: float
+    image: str | None = None
+    category: str | None = None
+    rating: float | None = None
 
 class MenuItemCreate(MenuItemBase):
     id: str
 
-class MenuItemResponse(MenuItemCreate):
+class MenuItem(MenuItemBase):
+    id: str
+
     class Config:
-        from_attributes = True
+        form_mode = True

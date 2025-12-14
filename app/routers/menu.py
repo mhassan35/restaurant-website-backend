@@ -1,20 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
+from app.database import get_db
 from app import crud, schemas
 
-router = APIRouter(
-    prefix="/menu",
-    tags=["Menu"]
-)
+router = APIRouter(prefix="/menu", tags=["menu"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-@router.get("/", response_model=list[schemas.MenuItemResponse])
-def get_menu(db: Session = Depends(get_db)):
+@router.get("/", response_model=list[schemas.MenuItem])
+def read_menu(db: Session = Depends(get_db)):
     return crud.get_menu_items(db)

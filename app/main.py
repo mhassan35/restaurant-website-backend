@@ -1,13 +1,11 @@
 from fastapi import FastAPI
+from app.routers import menu
 from app.database import Base, engine
-from app.routers.menu import router as menu_router
 
+# Create tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Restaurant API")
 
-app.include_router(menu_router)
-
-@app.get("/")
-def root():
-    return {"status": "API is running"}
+# Include routers
+app.include_router(menu.router)
